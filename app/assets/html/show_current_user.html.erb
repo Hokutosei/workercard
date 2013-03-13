@@ -1,0 +1,29 @@
+
+<div class="span5">
+
+</div>
+<div class="span6 profile-data">
+  <div class="control-group">
+    <label class="control-label">Username: {{userName}} </label>
+  </div>
+  <div class="control-group">
+    <label class="control-label">Email: {{userEmail}} </label>
+  </div>
+
+</div>
+
+
+
+
+
+<div class="span5">
+    Username: {{currentUser}} <%#= current_user.username if current_user.present? %>
+  {{users_length}}
+
+</div>
+<div class="span6 profile-data">
+    <ul>
+        <li ng-repeat="user in users">{{user.username}}</li>
+    </ul>
+
+</div>

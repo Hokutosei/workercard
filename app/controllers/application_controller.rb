@@ -1,8 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  protect_from_forgery
-
   before_filter :intercept_html_requests
 
   helper_method :current_user_session, :current_user

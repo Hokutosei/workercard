@@ -1,0 +1,72 @@
+var app = angular.module("workerCardApp", []);
+
+app.config(function($routeProvider){
+   $routeProvider.when('/',
+       {
+           templateUrl:"<%= asset_path('registration_page.html.erb')%>",
+           controller: 'AppCtrl'
+       })
+       .when('/show_current_user',
+       {
+            templateUrl:"<%= asset_path('show_current_user.html.erb')%>",
+            controller: 'CurrentUserCtrl'
+       })
+       .when('/test',
+           {
+               templateUrl: "<%= asset_path('test.html') %>",
+               controller: 'TestController'
+           })
+
+});
+
+
+app.controller('AppCtrl', function($scope, $http, $location){
+    $scope.model = {
+        message: 'this is my app!'
+    };
+    $scope.registerUser = function() {
+        $http.put('/register_user/', {
+            username: $scope.userName,
+            email: $scope.userEmail,
+            password: $scope.userPassword,
+            password_confirmation: $scope.passwordConfirm
+        } ).success(function(){
+                    $scope.userName = '';
+                    $scope.userEmail = '';
+                    $scope.userPassword = '';
+                    $scope.passwordConfirm = '';
+                   // $('body').css({'background-color': '#ccc'})
+                    $location.path('#/');
+                });
+    };
+    $scope.loggedin_user = "<%= @current_users.username if @current_users.present? %>"
+
+});
+
+app.controller('CurrentUserCtrl', function($scope, $http){
+   $http.get('/show_current_user').success(function(data){
+       //$scope.currentUser = data;
+        $scope.users = data
+        $scope.currentUser = data[0];
+   })
+});
+
+
+app.controller('TestController', function($scope){
+    $scope.testM = 'test message!';
+});
+
+/*
+app.config([$stateProvider,
+    function($stateProvider) {
+        $stateProvider
+                .when('/',{
+
+                }).state('user_login',{
+                    templateUrl: "<%#= asset_path('test.html') %>",
+                    controller: ['$scope', function($scope){
+                        $scope.testing = 'this test';
+                    }]
+                })
+    }
+]);*/

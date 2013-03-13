@@ -1,6 +1,9 @@
 WorkerCard::Application.routes.draw do
   root :to => 'users#index'
 
+  match '/register_user' => 'users#register_user'
+  match '/show_current_user' => 'users#show_current_user'
+
   resources :users
 
 
