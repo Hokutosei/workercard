@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     @user_logged_in = user_logged_in?
     @users = User.count
     data_hash = []; [@users, @user_logged_in].each {|value| data_hash << value}
-    p data_hash[1]
+    p "hash 1 #{data_hash[1]}"
     respond_with data_hash
   end
 
@@ -28,6 +28,11 @@ class UsersController < ApplicationController
     respond_with @json
   end
 
+  def user_logged_in
+    @user = @current_user
+    respond_with @user
+  end
+
   private
   def current_user_session
     return @current_user_session if defined?(@current_user_session)
@@ -41,8 +46,8 @@ class UsersController < ApplicationController
 
 
   def user_logged_in?
-    if @current_user.present?
-      @current_user
+    unless current_user.nil?
+      return true
     else
       @user = 'not logged in'
       return false

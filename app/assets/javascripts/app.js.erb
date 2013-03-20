@@ -24,7 +24,13 @@ app.config(function($routeProvider){
            {
                templateUrl: "<%= asset_path('test.html') %>",
                controller: 'TestController'
-           })
+       })
+       .when('/user_logged_in',
+           {
+               templateUrl: "<%= asset_path('user_logged_in.html.erb') %>",
+               controller: 'UserLoggedIn'
+
+       })
 
 });
 
@@ -45,18 +51,6 @@ function setThisLink() {
 
     return registerLink();
 }
-
-
-/*
-app.controller('UserCtrl', function($scope, $http, changeLinkService){
-    $scope.testLink = $scope.homeLink;
-    $scope.$on('homeLink', function() {
-        $scope.homeLink = changeLinkService.linkService;
-    });
-
-});
-*/
-
 function UserCtrl($scope, LinkService) {
     $scope.data = LinkService.homeLinkService
 }
@@ -68,11 +62,6 @@ function setHomeTemplate() {
         link: "<%= asset_path('registration_page.html.erb') %>"
         }
 }
-
-
-
-
-
 
 app.controller('AppCtrl', function($scope, $http, $location){
     $scope.model = {
@@ -90,20 +79,24 @@ app.controller('AppCtrl', function($scope, $http, $location){
                     $scope.userPassword = '';
                     $scope.passwordConfirm = '';
                    // $('body').css({'background-color': '#ccc'})
-                    $location.path('#/');
+                    $location.path('#/user_logged_in');
                 });
     };
 
-/*
-    $http.get('/index', {}).success(function(data, changeLinkService){
-        $scope.checkUserSession = data[0];
-        data[1] ? $scope.homeLink = '/index_page' : $scope.homeLink = '/show_current_user';
-        $scope.thisLink = $scope.homeLink;
-        //changeLinkService.prepForBroadcast($scope.homeLink);
-        //changeLinkService.linkService('thisLink');
-    });
-*/
-
+    function UserLoggedIn() {
+        $http.get('/index.json').success(function(data){
+            $scope.userIsLoggedIn = data[1];
+            alert($scope.userIsLoggedIn)
+        })
+    }
+    var user = new UserLoggedIn();
+    function setHomeLinkUrl() {
+        if ($scope.userIsLoggedIn == true) {
+            $scope.homeLinkUrl = '#/user_logged_in'
+        } else {
+            $scope.homeLinkUrl = '#/'
+        }
+    }
 });
 
 app.controller('CurrentUserCtrl', function($scope, $http){
@@ -112,6 +105,10 @@ app.controller('CurrentUserCtrl', function($scope, $http){
         $scope.users = data;
         $scope.currentUser = data[0];
    })
+});
+
+app.controller('UserLoggedIn', function($scope, $http){
+
 });
 
 app.controller('TestController', function($scope){

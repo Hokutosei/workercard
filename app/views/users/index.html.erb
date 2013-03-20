@@ -1,4 +1,4 @@
-<%#= current_user.username if current_user.present? %>
+<%= current_user.username if current_user.present? %>
 
 <div class="container-fluid border-util border-radius-util border-radius-shadow-util index-content"  ng-controller="UserCtrl">
   <div class="row-fluid content-wrapper">
@@ -6,7 +6,7 @@
       {{data}}
       <ul class="main-nav-item">
         <li>
-          <a href="#/">Home</a>
+          <a href="{{homeLinkUrl}}">Home {{homeLinkUrl}}</a>
         </li>
 
         <li>
