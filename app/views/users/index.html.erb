@@ -1,24 +1,33 @@
-<%= current_user.username if current_user.present? %>
-<div class="container-fluid" ng-controller="UserCtrl">
+<%#= current_user.username if current_user.present? %>
+
+<div class="container-fluid border-util border-radius-util border-radius-shadow-util index-content"  ng-controller="UserCtrl">
   <div class="row-fluid content-wrapper">
-    <ng-view></ng-view>
+    <div class="span3 left-main-nav">
+      {{data}}
+      <ul class="main-nav-item">
+        <li>
+          <a href="#/">Home</a>
+        </li>
+
+        <li>
+          <a href="#/test">test page</a>
+        </li>
+
+
+      </ul>
+
+    </div>
+
+    <div class="span7 my-ng-view-content">
+      <ng-view></ng-view>
+    </div>
 
   </div>
-  <a href="#/"><button class="btn btn-small">main</button> </a>
 
-  <a href="#/show_current_user"><button class="btn btn-small">show user</button> </a>
-  <a href="#/test"><button class="btn btn-small">test</button> </a> <br/>
-
-  <a ng-click="showHide=!showHide">ToggleState: {{!!showHide}} </a>
-  <div ui-show="showHide">Show</div>
-  <div ui-hide="showHide">Hide</div>
-  <div ui-toggle="showHide">Toggle</div>
-
-
-  <div class="container" style="margin-top:60px" ng-state-view></div>
 
 </div>
 
 
+{{homeLink}}
 
 <%#= link_to 'New User', new_user_path %>

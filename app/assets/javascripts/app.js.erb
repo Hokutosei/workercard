@@ -1,9 +1,18 @@
-var app = angular.module("workerCardApp", []);
+var app = angular.module("workerCardApp", ['ngResource']);
+
+app.factory('LinkService', function (){
+    return {
+        linkService: 'testing is now called!',
+        url : "<%= asset_path('index_page.html.erb') %>"
+
+    }
+});
+
 
 app.config(function($routeProvider){
    $routeProvider.when('/',
        {
-           templateUrl:"<%= asset_path('registration_page.html.erb')%>",
+           templateUrl: "<%= asset_path('index_page.html.erb') %>",
            controller: 'AppCtrl'
        })
        .when('/show_current_user',
@@ -18,6 +27,51 @@ app.config(function($routeProvider){
            })
 
 });
+
+function homeTemplate($scope, LinkService) {
+    $scope.templateA = LinkService.url;
+}
+
+function setThisLink() {
+    var registerLink = function() {
+        var myLink = function($http) {
+            //return "<%= asset_path('registration_page.html.erb') %>"
+            $http.get('/index').success(function(data){
+
+            })
+        };
+        return myLink();
+    };
+
+    return registerLink();
+}
+
+
+/*
+app.controller('UserCtrl', function($scope, $http, changeLinkService){
+    $scope.testLink = $scope.homeLink;
+    $scope.$on('homeLink', function() {
+        $scope.homeLink = changeLinkService.linkService;
+    });
+
+});
+*/
+
+function UserCtrl($scope, LinkService) {
+    $scope.data = LinkService.homeLinkService
+}
+
+
+
+function setHomeTemplate() {
+    return {
+        link: "<%= asset_path('registration_page.html.erb') %>"
+        }
+}
+
+
+
+
 
 
 app.controller('AppCtrl', function($scope, $http, $location){
@@ -39,34 +93,28 @@ app.controller('AppCtrl', function($scope, $http, $location){
                     $location.path('#/');
                 });
     };
-    $scope.loggedin_user = "<%= @current_users.username if @current_users.present? %>"
+
+/*
+    $http.get('/index', {}).success(function(data, changeLinkService){
+        $scope.checkUserSession = data[0];
+        data[1] ? $scope.homeLink = '/index_page' : $scope.homeLink = '/show_current_user';
+        $scope.thisLink = $scope.homeLink;
+        //changeLinkService.prepForBroadcast($scope.homeLink);
+        //changeLinkService.linkService('thisLink');
+    });
+*/
 
 });
 
 app.controller('CurrentUserCtrl', function($scope, $http){
    $http.get('/show_current_user').success(function(data){
        //$scope.currentUser = data;
-        $scope.users = data
+        $scope.users = data;
         $scope.currentUser = data[0];
    })
 });
-
 
 app.controller('TestController', function($scope){
     $scope.testM = 'test message!';
 });
 
-/*
-app.config([$stateProvider,
-    function($stateProvider) {
-        $stateProvider
-                .when('/',{
-
-                }).state('user_login',{
-                    templateUrl: "<%#= asset_path('test.html') %>",
-                    controller: ['$scope', function($scope){
-                        $scope.testing = 'this test';
-                    }]
-                })
-    }
-]);*/

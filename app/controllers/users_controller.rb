@@ -1,16 +1,16 @@
 class UsersController < ApplicationController
 
-  helper_method :current_user_session, :current_user
+  #helper_method :current_user_session, :current_user
 
   respond_to :html, :json
   skip_before_filter  :verify_authenticity_token, :on => :register_user
 
   def index
-    p "index current_user #{current_user}"
-    @user = User.find(params[:id])
-    @current_user = current_user
-    p current_user
-    respond_with @user
+    @user_logged_in = user_logged_in?
+    @users = User.count
+    data_hash = []; [@users, @user_logged_in].each {|value| data_hash << value}
+    p data_hash[1]
+    respond_with data_hash
   end
 
   def register_user
@@ -21,7 +21,6 @@ class UsersController < ApplicationController
   end
 
   def show_current_user
-    p "show  current_user #{current_user.username}"
     @users = User.all
     a = []
     @json = [current_user.username, @users].each {|v| a << v}
@@ -40,5 +39,14 @@ class UsersController < ApplicationController
     @current_user = current_user_session && current_user_session.user
   end
 
+
+  def user_logged_in?
+    if @current_user.present?
+      @current_user
+    else
+      @user = 'not logged in'
+      return false
+    end
+  end
 
 end

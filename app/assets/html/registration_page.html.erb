@@ -1,5 +1,5 @@
-{{loggedin_user}}    as
 <div class="span5">
+    {{userPresent}}
     <form class="form-horizontal">
 
         <div class="control-group">
@@ -33,15 +33,6 @@
         <button class="btn offset4" ng-click="registerUser()">Register</button>
     </form>
 
-    <div id="user_nav">
-        <% if @current_user %>
-        <%#= link_to "Edit Profile", edit_user_path(:current) %> |
-        <%#= link_to "Logout", logout_path %>
-        <% else %>
-        <%#= link_to "Register", "" %> |
-        <%#= link_to "Login", '' %>
-        <% end %>
-    </div>
 
 </div>
 <div class="span6 profile-data">

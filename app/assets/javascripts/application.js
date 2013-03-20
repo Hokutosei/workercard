@@ -17,3 +17,8 @@
 //= require angular-ui
 //= require twitter/bootstrap
 //= require_tree .
+
+
+$(document).ready(function(){
+   $('.left-main-nav').css({height: $('.main-content').height()});
+});

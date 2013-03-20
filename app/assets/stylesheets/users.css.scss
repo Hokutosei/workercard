@@ -2,18 +2,49 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+/*
+
+
+  Mixin
+
+
+*/
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin box-shadow($distance, $opacity) {
+  -webkit-box-shadow: 0px $distance 5px rgba(50, 50, 50, $opacity);
+  -moz-box-shadow:    0px $distance 5px rgba(50, 50, 50, $opacity);
+  box-shadow:         0px $distance 5px rgba(50, 50, 50, $opacity);
+}
+
+
+
+
+
 
 .main-content {
-
+  min-height: 700px;
   .content-wrapper {
-    padding-top: 25px;
-    padding-bottom: 25px;
-    min-height: 500px;
+    min-height: 730px;
   }
+
 }
 
 .border-util {
   border: 1px solid lightgray;
+}
+
+.border-radius-util {
+  @include border-radius(5px);
+}
+
+.border-radius-shadow-util {
+  @include border-radius(5px);
+  @include box-shadow(4px, 0.1);
 }
 
 .profile-data {
@@ -22,5 +53,40 @@
   font-size: 20px;
   .profile-item {
     margin-bottom: 20px;
+  }
+}
+
+.index-content {
+  padding-left: 0px;
+  padding-top: 0px;
+}
+
+.my-ng-view-content {
+  padding-top: 25px;
+}
+
+.left-main-nav {
+  border-right: 1px solid lightgray;
+  padding-left: 5px;
+  padding-top: 25px;
+
+  ul.main-nav-item {
+    list-style-type: none;
+    padding-left: 0px;
+    margin-left: 0px;
+    li {
+      font-size: 19px;
+      padding-left: 5px;
+      padding-top: 13px;
+      height: 30px;
+      margin-top: 20px;
+      border-left: 5px solid #ffffff;
+      &:hover {
+        border-left: 5px solid lightblue;
+      }
+      a {
+        padding-top: 10px;
+      }
+    }
   }
 }

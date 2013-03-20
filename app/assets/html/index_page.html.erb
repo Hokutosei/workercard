@@ -1,0 +1,43 @@
+<% if @current_user %>
+
+<% else %>
+    <%= @current_user.class %>
+    <div class="span5">
+      {{userPresent}}
+      <form class="form-horizontal">
+
+        <div class="control-group">
+          <label class="control-label" for="inputUsername">Username</label>
+          <div class="controls">
+            <input type="text" ng-model="userName">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="inputEmail">Email</label>
+          <div class="controls">
+            <input type="text" ng-model="userEmail">
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for="password">password</label>
+          <div class="controls">
+            <input type="password" ng-model="userPassword">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="password_confirm">password_confirm</label>
+          <div class="controls">
+            <input type="password" ng-model="passwordConfirm">
+          </div>
+        </div>
+
+        <div ui-view></div>
+        <div ui-view='user_login'></div>
+        <button class="btn offset4" ng-click="registerUser()">Register</button>
+      </form>
+
+
+    </div>
+
+<% end %>

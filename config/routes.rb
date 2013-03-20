@@ -3,6 +3,7 @@ WorkerCard::Application.routes.draw do
 
   match '/register_user' => 'users#register_user'
   match '/show_current_user' => 'users#show_current_user'
+  match '/index' => 'users#index'
 
   resources :users
 
