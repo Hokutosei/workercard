@@ -1,10 +1,7 @@
 <% if @current_user %>
 
 <% else %>
-    {{userIsLoggedIn}}
-
-    <div class="span5">
-      {{userPresent}}
+    <div class="span5" ng-controller="AppCtrl">
       <form class="form-horizontal">
 
         <div class="control-group">
@@ -37,8 +34,6 @@
         <div ui-view='user_login'></div>
         <button class="btn offset4" ng-click="registerUser()">Register</button>
       </form>
-
-
     </div>
 
 <% end %>

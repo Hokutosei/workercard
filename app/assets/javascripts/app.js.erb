@@ -29,32 +29,14 @@ app.config(function($routeProvider){
            {
                templateUrl: "<%= asset_path('user_logged_in.html.erb') %>",
                controller: 'UserLoggedIn'
-
        })
+       .when('/logout',
+           {
+               templateUrl: "<%= asset_path('index_page.html.erb') %>",
+               controller: 'UserLogout'
+           })
 
 });
-
-function homeTemplate($scope, LinkService) {
-    $scope.templateA = LinkService.url;
-}
-
-function setThisLink() {
-    var registerLink = function() {
-        var myLink = function($http) {
-            //return "<%= asset_path('registration_page.html.erb') %>"
-            $http.get('/index').success(function(data){
-
-            })
-        };
-        return myLink();
-    };
-
-    return registerLink();
-}
-function UserCtrl($scope, LinkService) {
-    $scope.data = LinkService.homeLinkService
-}
-
 
 
 function setHomeTemplate() {
@@ -82,26 +64,20 @@ app.controller('AppCtrl', function($scope, $http, $location){
                     $location.path('#/user_logged_in');
                 });
     };
-
-    function UserLoggedIn() {
-        $http.get('/index.json').success(function(data){
-            $scope.userIsLoggedIn = data[1];
-            alert($scope.userIsLoggedIn)
-        })
-    }
-    var user = new UserLoggedIn();
-    function setHomeLinkUrl() {
-        if ($scope.userIsLoggedIn == true) {
-            $scope.homeLinkUrl = '#/user_logged_in'
-        } else {
-            $scope.homeLinkUrl = '#/'
+    $scope.UserData = $http.get('/index').success(function(data){
+        return data[1];
+    });
+    $scope.userHomeLink = function(){
+        var homeLink;
+        if($scope.UserData){
+            homeLink = '#/'
         }
-    }
+        return homeLink
+    };
 });
 
 app.controller('CurrentUserCtrl', function($scope, $http){
    $http.get('/show_current_user').success(function(data){
-       //$scope.currentUser = data;
         $scope.users = data;
         $scope.currentUser = data[0];
    })
@@ -109,6 +85,11 @@ app.controller('CurrentUserCtrl', function($scope, $http){
 
 app.controller('UserLoggedIn', function($scope, $http){
 
+});
+
+app.controller('UserLogout', function($http, $location){
+    $http.put('/logout');
+    $location.path('#/');
 });
 
 app.controller('TestController', function($scope){

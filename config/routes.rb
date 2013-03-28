@@ -6,6 +6,8 @@ WorkerCard::Application.routes.draw do
   match '/index' => 'users#index'
   match '/user_logged_in' => 'users#user_logged_in'
 
+  match '/logout' => 'user_sessions#destroy'
+
   resources :users
 
 

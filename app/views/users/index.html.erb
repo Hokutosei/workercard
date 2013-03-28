@@ -1,18 +1,20 @@
 <%= current_user.username if current_user.present? %>
 
-<div class="container-fluid border-util border-radius-util border-radius-shadow-util index-content"  ng-controller="UserCtrl">
+<div class="container-fluid border-util border-radius-util border-radius-shadow-util index-content" ng-controller="AppCtrl">
   <div class="row-fluid content-wrapper">
     <div class="span3 left-main-nav">
-      {{data}}
       <ul class="main-nav-item">
         <li>
-          <a href="{{homeLinkUrl}}">Home {{homeLinkUrl}}</a>
+          <a href="{{userHomeLink()}}">Home</a>
         </li>
 
         <li>
           <a href="#/test">test page</a>
         </li>
 
+        <li>
+          <a href="#/logout">logout</a>
+        </li>
 
       </ul>
 
@@ -26,8 +28,5 @@
 
 
 </div>
-
-
-{{homeLink}}
 
 <%#= link_to 'New User', new_user_path %>
