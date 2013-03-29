@@ -35,6 +35,10 @@ app.config(function($routeProvider){
                templateUrl: "<%= asset_path('index_page.html.erb') %>",
                controller: 'UserLogout'
            })
+       .when('/login',{
+           templateUrl: "<%= asset_path('registration_page.html.erb') %>",
+           controller: 'UserLogin'
+       })
 
 });
 
@@ -70,7 +74,12 @@ app.controller('AppCtrl', function($scope, $http, $location){
     $scope.userHomeLink = function(){
         var homeLink;
         if($scope.UserData){
+            $scope.userLinkToLog = 'Logout';
+            $scope.userLinkToUrl = '#/logout';
             homeLink = '#/'
+        } else {
+            $scope.userLinkToLog = 'Login';
+            $scope.userLinkToUrl = '#/login';
         }
         return homeLink
     };
@@ -90,6 +99,10 @@ app.controller('UserLoggedIn', function($scope, $http){
 app.controller('UserLogout', function($http, $location){
     $http.put('/logout');
     $location.path('#/');
+});
+
+app.controller('UserLogin', function(){
+
 });
 
 app.controller('TestController', function($scope){
