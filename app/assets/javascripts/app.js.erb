@@ -19,9 +19,6 @@ app.service('checkUserSession', function($http){
 });
 
 app.controller('AppCtrl', function($scope, $http, $location, checkUserSession){
-    $scope.model = {
-        message: 'this is my app!'
-    };
     checkUserSession.async().success(function(data){
         $scope.myUserSession = data[1];
         if (data[1]) {
@@ -30,6 +27,7 @@ app.controller('AppCtrl', function($scope, $http, $location, checkUserSession){
             $scope.userLinkTo = 'login'
         }
     });
+    $scope.homeLinkUrl = '#/'
 });
 
 
