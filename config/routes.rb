@@ -7,6 +7,7 @@ WorkerCard::Application.routes.draw do
   match '/user_logged_in' => 'users#user_logged_in'
 
   match '/logout' => 'user_sessions#destroy'
+  match '/login' => 'user_sessions#create'
 
   resources :users
 

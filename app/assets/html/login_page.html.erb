@@ -1,0 +1,16 @@
+<form class="form-horizontal" ng-controller="UserLogin">
+
+  <div class="control-group">
+    <label class="control-label" for="inputUsername">Username</label>
+    <div class="controls">
+      <input type="text" ng-model="loginUserName">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="inputPassword">Password</label>
+    <div class="controls">
+      <input type="text" ng-model="loginUserPassword">
+    </div>
+  </div>
+  <button class="btn" ng-click="UserLogin()">Login</button>
+</form>

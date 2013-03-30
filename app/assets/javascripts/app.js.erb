@@ -8,82 +8,31 @@ app.factory('LinkService', function (){
     }
 });
 
-
-app.config(function($routeProvider){
-   $routeProvider.when('/',
-       {
-           templateUrl: "<%= asset_path('index_page.html.erb') %>",
-           controller: 'AppCtrl'
-       })
-       .when('/show_current_user',
-       {
-            templateUrl:"<%= asset_path('show_current_user.html.erb')%>",
-            controller: 'CurrentUserCtrl'
-       })
-       .when('/test',
-           {
-               templateUrl: "<%= asset_path('test.html') %>",
-               controller: 'TestController'
-       })
-       .when('/user_logged_in',
-           {
-               templateUrl: "<%= asset_path('user_logged_in.html.erb') %>",
-               controller: 'UserLoggedIn'
-       })
-       .when('/logout',
-           {
-               templateUrl: "<%= asset_path('index_page.html.erb') %>",
-               controller: 'UserLogout'
-           })
-       .when('/login',{
-           templateUrl: "<%= asset_path('registration_page.html.erb') %>",
-           controller: 'UserLogin'
-       })
-
+app.service('checkUserSession', function($http){
+    return {
+        async: function() {
+            return $http.get('/index').success(function(data){
+                return data
+            })
+        }
+    }
 });
 
-
-function setHomeTemplate() {
-    return {
-        link: "<%= asset_path('registration_page.html.erb') %>"
-        }
-}
-
-app.controller('AppCtrl', function($scope, $http, $location){
+app.controller('AppCtrl', function($scope, $http, $location, checkUserSession){
     $scope.model = {
         message: 'this is my app!'
     };
-    $scope.registerUser = function() {
-        $http.put('/register_user/', {
-            username: $scope.userName,
-            email: $scope.userEmail,
-            password: $scope.userPassword,
-            password_confirmation: $scope.passwordConfirm
-        } ).success(function(){
-                    $scope.userName = '';
-                    $scope.userEmail = '';
-                    $scope.userPassword = '';
-                    $scope.passwordConfirm = '';
-                   // $('body').css({'background-color': '#ccc'})
-                    $location.path('#/user_logged_in');
-                });
-    };
-    $scope.UserData = $http.get('/index').success(function(data){
-        return data[1];
-    });
-    $scope.userHomeLink = function(){
-        var homeLink;
-        if($scope.UserData){
-            $scope.userLinkToLog = 'Logout';
-            $scope.userLinkToUrl = '#/logout';
-            homeLink = '#/'
+    checkUserSession.async().success(function(data){
+        $scope.myUserSession = data[1];
+        if (data[1]) {
+            $scope.userLinkTo = 'logout';
         } else {
-            $scope.userLinkToLog = 'Login';
-            $scope.userLinkToUrl = '#/login';
+            $scope.userLinkTo = 'login'
         }
-        return homeLink
-    };
+    });
 });
+
+
 
 app.controller('CurrentUserCtrl', function($scope, $http){
    $http.get('/show_current_user').success(function(data){
@@ -97,11 +46,38 @@ app.controller('UserLoggedIn', function($scope, $http){
 });
 
 app.controller('UserLogout', function($http, $location){
-    $http.put('/logout');
-    $location.path('#/');
+    $http.put('/logout').success(function(data){
+        $location.path('#/');
+    });
 });
 
-app.controller('UserLogin', function(){
+app.controller('UserLogin', function($http, $scope){
+    $scope.UserLogin = function(){
+        $http.put('/login/', {
+            username: $scope.loginUserName,
+            password: $scope.loginUserPassword
+        }).success(function(data){
+                    console.log(data)
+             })
+    }
+});
+
+app.controller('RegisterUser', function($http, $scope, $location){
+    $scope.registerUser = function() {
+        $http.put('/register_user/', {
+            username: $scope.userName,
+            email: $scope.userEmail,
+            password: $scope.userPassword,
+            password_confirmation: $scope.passwordConfirm
+        } ).success(function(){
+                    $scope.userName = '';
+                    $scope.userEmail = '';
+                    $scope.userPassword = '';
+                    $scope.passwordConfirm = '';
+                    // $('body').css({'background-color': '#ccc'})
+                    $location.path('#/user_logged_in');
+                });
+    };
 
 });
 

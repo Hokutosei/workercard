@@ -1,0 +1,32 @@
+app.config(function($routeProvider){
+    $routeProvider.when('/',
+            {
+                templateUrl: "<%= asset_path('index_page.html.erb') %>",
+                controller: 'AppCtrl'
+            })
+            .when('/show_current_user',
+            {
+                templateUrl:"<%= asset_path('show_current_user.html.erb')%>",
+                controller: 'CurrentUserCtrl'
+            })
+            .when('/test',
+            {
+                templateUrl: "<%= asset_path('test.html') %>",
+                controller: 'TestController'
+            })
+            .when('/user_logged_in',
+            {
+                templateUrl: "<%= asset_path('user_logged_in.html.erb') %>",
+                controller: 'UserLoggedIn'
+            })
+            .when('/logout',
+            {
+                templateUrl: "<%= asset_path('index_page.html.erb') %>",
+                controller: 'UserLogout'
+            })
+            .when('/login',{
+                templateUrl: "<%= asset_path('login_page.html.erb') %>",
+                controller: 'UserLogin'
+            })
+
+});
