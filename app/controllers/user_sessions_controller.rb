@@ -6,19 +6,19 @@ class UserSessionsController < ApplicationController
 
   def create
     @user_session = UserSession.new(params[:user_session])
-    p @user_session.inspect
+    p "this user session #{@user_session}"
     if @user_session.save
-      p "user #{@user_session}"
       respond_with @user_session
     else
-      render :action => :new
+      @message = 'not logged in'
+      respond_with @message
+      #render :action => :new
     end
   end
 
   def destroy
-    #current_user_session.destroy
     @user_session = UserSession.find
-    p "this user session #{@user_session}"
+    p "user dest #{@user_session.inspect}"
     @user_session.destroy
     respond_with @user_session
 

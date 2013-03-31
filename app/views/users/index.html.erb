@@ -3,6 +3,7 @@
 <div class="container-fluid border-util border-radius-util border-radius-shadow-util index-content" ng-controller="AppCtrl">
   <div class="row-fluid content-wrapper">
     <div class="span3 left-main-nav">
+    {{emittedMessage}} {{userEmittedMessage}}
       <ul class="main-nav-item">
         <li>
           <a href="{{homeLinkUrl}}">Home</a>
@@ -14,6 +15,9 @@
         <li>
           <a href="#/{{userLinkTo}}">{{userLinkTo}}</a>
         </li>
+        <li>
+          <a href="" ng-controller="ChildLogout" ng-click="onButtonClick()">Child</a>
+        </li>
       </ul>
 
     </div>
@@ -24,7 +28,7 @@
 
   </div>
 
-
+  <hello-world></hello-world>
 </div>
 
 <%#= link_to 'New User', new_user_path %>

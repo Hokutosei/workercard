@@ -1,4 +1,14 @@
-var app = angular.module("workerCardApp", ['ngResource']);
+var app = angular.module("workerCardApp", ['ngResource', 'userComponents']);
+
+angular.module('userComponents',[])
+        .directive('helloWorld', function(){
+            return {
+                restrict: 'E',
+                //templateUrl: "<%#= asset_path('registration_path') %>"
+                template: '<span>hello world jeane</span>'
+            }
+        });
+
 
 app.factory('LinkService', function (){
     return {
@@ -27,7 +37,13 @@ app.controller('AppCtrl', function($scope, $http, $location, checkUserSession){
             $scope.userLinkTo = 'login'
         }
     });
-    $scope.homeLinkUrl = '#/'
+    $scope.homeLinkUrl = '#/';
+    $scope.$on('update_parent', function(event,message){
+        $scope.emittedMessage = message;
+    });
+    $scope.$on('user_logged_in', function(event, message){
+        $scope.userEmittedMessage = message;
+    })
 });
 
 
@@ -44,19 +60,28 @@ app.controller('UserLoggedIn', function($scope, $http){
 });
 
 app.controller('UserLogout', function($http, $location){
-    $http.put('/logout').success(function(data){
+    $http.put('/logout').success(function(){
         $location.path('#/');
     });
 });
 
-app.controller('UserLogin', function($http, $scope){
+app.controller('UserLogin', function($http, $scope, $location){
     $scope.UserLogin = function(){
         $http.put('/login/', {
             username: $scope.loginUserName,
             password: $scope.loginUserPassword
-        }).success(function(data){
-                    console.log(data)
-             })
+        })
+        .success(function(data){
+            console.log(data);
+            this.$emit('user_logged_in', data);
+            $location.path('#/');
+        })
+    }
+});
+
+app.controller('ChildLogout', function($scope){
+    $scope.onButtonClick = function() {
+        this.$emit('update_parent', 'updated')
     }
 });
 
