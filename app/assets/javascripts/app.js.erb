@@ -6,7 +6,7 @@ angular.module('userComponents',[])
                 restrict: 'E',
                 //templateUrl: "<%#= asset_path('registration_path') %>"
                 template: '<span>hello world jeane</span>'
-            }
+            };
         });
 
 
@@ -15,7 +15,7 @@ app.factory('LinkService', function (){
         linkService: 'testing is now called!',
         url : "<%= asset_path('index_page.html.erb') %>"
 
-    }
+    };
 });
 
 app.service('checkUserSession', function($http){
@@ -23,7 +23,7 @@ app.service('checkUserSession', function($http){
         async: function() {
             return $http.get('/index').success(function(data){
                 return data
-            })
+            });
         }
     }
 });
